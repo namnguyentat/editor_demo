@@ -1,0 +1,80 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      #editor {
+        position: absolute;
+        top: 50px;
+        width: 1000px;
+        height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <button onclick="setEditorValue()">Set default value</button>
+      <button onclick="getEditorValue()">Get value</button>
+    </div>
+    <div id="editor"></div>
+    <script src="./src/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+      document.getElementById('editor').style.fontSize = '12px';
+      var editor = ace.edit("editor");
+      editor.setTheme("ace/theme/monokai");
+      editor.session.setMode("ace/mode/python");
+
+      function getEditorValue() {
+        const value = editor.getValue();
+        console.log(value);
+        alert(value);
+      }
+
+      const defaultValue = `
+# Import the modules
+import sys
+import random
+
+ans = True
+
+while ans:
+    question = raw_input("Ask the magic 8 ball a question: (press enter to quit) ")
+
+    answers = random.randint(1,8)
+
+    if question == "":
+        sys.exit()
+
+    elif answers == 1:
+        print "It is certain"
+
+    elif answers == 2:
+        print "Outlook good"
+
+    elif answers == 3:
+        print "You may rely on it"
+
+    elif answers == 4:
+        print "Ask again later"
+
+    elif answers == 5:
+        print "Concentrate and ask again"
+
+    elif answers == 6:
+        print "Reply hazy, try again"
+
+    elif answers == 7:
+        print "My reply is no"
+
+    elif answers == 8:
+        print "My sources say no""
+      `;
+
+      function setEditorValue() {
+        editor.setValue(defaultValue);
+      }
+    </script>
+  </body>
+</html>
