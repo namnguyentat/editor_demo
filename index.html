@@ -11,20 +11,27 @@
         width: 1000px;
         height: 500px;
       }
+      .breakpoint {
+        background-color: bisque;
+      }
     </style>
   </head>
   <body>
     <div>
       <button onclick="setEditorValue()">Set default value</button>
       <button onclick="getEditorValue()">Get value</button>
+      <button onclick="showEditorErr()">Show error</button>
+      <button onclick="showEditorBreakpoint()">Show breakpoint</button>
+      <button onclick="clearEditorErr()">Clear error</button>
+      <button onclick="clearEditorBreakpoint()">Clear breakpoint</button>
     </div>
     <div id="editor"></div>
     <script src="./src/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>
       document.getElementById('editor').style.fontSize = '12px';
-      var editor = ace.edit("editor");
-      editor.setTheme("ace/theme/monokai");
-      editor.session.setMode("ace/mode/python");
+      var editor = ace.edit('editor');
+      editor.setTheme('ace/theme/monokai');
+      editor.session.setMode('ace/mode/python');
 
       function getEditorValue() {
         const value = editor.getValue();
@@ -74,6 +81,31 @@ while ans:
 
       function setEditorValue() {
         editor.setValue(defaultValue);
+      }
+      function showEditorErr() {
+        editor.getSession().setAnnotations([
+          {
+            row: 10,
+            column: 10,
+            text: 'First error Message', // Or the Json reply from the parser
+            type: 'error' // also warning and information
+          },
+          {
+            row: 15,
+            column: 10,
+            text: 'Sencond error Message', // Or the Json reply from the parser
+            type: 'error' // also warning and information
+          }
+        ]);
+      }
+      function showEditorBreakpoint() {
+        editor.getSession().setBreakpoint(12, 'breakpoint');
+      }
+      function clearEditorErr() {
+        editor.getSession().clearAnnotations();
+      }
+      function clearEditorBreakpoint() {
+        editor.getSession().clearBreakpoints();
       }
     </script>
   </body>
